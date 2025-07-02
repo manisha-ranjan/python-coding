@@ -16,10 +16,31 @@ def get_users():
 # Route: GET a user by ID
 @app.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
-    user = next((u for u in users if u["id"] == user_id), None)
+    user = None
+    for u in users:
+        if u["id"] == user_id:
+            user = u
+            break
+
     if user:
         return jsonify(user)
     return jsonify({"error": "User not found"}), 404
+
+# Route: GET a user by name
+@app.route('/users/name/<user_name>', methods=['GET'])
+def get_userbyname(user_name):
+    user = None
+    for u in users:
+        print(u["name"])
+        if u["name"].strip().lower() == user_name.strip().lower():
+            user = u
+            print(user)
+            break
+
+    if user:
+        return jsonify(user)
+    return jsonify({"error": "User not found"}), 404
+
 
 # Route: POST a new user
 @app.route('/users', methods=['POST'])
