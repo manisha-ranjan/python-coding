@@ -18,7 +18,7 @@ class User(db.Model):
         return {"id": self.id, "name": self.name}
 
 # Create DB tables before first request
-@app.before_first_request
+@app.before_request
 def create_tables():
     db.create_all()
 
